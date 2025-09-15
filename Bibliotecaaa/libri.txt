@@ -1,0 +1,4 @@
+Deitel,Deitel;Java How to Program;Pearson;0-273-75976-0
+Aho,Ullman;Compilers;Pearson;0-321-48681-1
+Tolkien;Il Signore degli Anelli;Rusconi;88-18-12369-6
+Neruda;Poesie;Einaudi;88-06-02550-3
