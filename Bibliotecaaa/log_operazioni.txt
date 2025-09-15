@@ -1,0 +1,56 @@
+Libri caricati dal file:
+Aggiunto: Deitel,Deitel, Titolo: Java How to Program
+Aggiunto: Aho,Ullman, Titolo: Compilers
+Aggiunto: Tolkien, Titolo: Il Signore degli Anelli
+Aggiunto: Neruda, Titolo: Poesie
+
+*** Informazioni sui libri caricati ***
+l1 = Libro: Java How to Program (Autore: Deitel,Deitel, ISBN: 0-273-75976-0)
+l2 = Libro: Compilers (Autore: Aho,Ullman, ISBN: 0-321-48681-1)
+l3 = Libro: Il Signore degli Anelli (Autore: Tolkien, ISBN: 88-18-12369-6)
+l4 = Libro: Poesie (Autore: Neruda, ISBN: 88-06-02550-3)
+
+*** Libri ordinati per autore ***
+Libro: Compilers (Autore: Aho,Ullman, ISBN: 0-321-48681-1)
+Libro: Java How to Program (Autore: Deitel,Deitel, ISBN: 0-273-75976-0)
+Libro: Poesie (Autore: Neruda, ISBN: 88-06-02550-3)
+Libro: Il Signore degli Anelli (Autore: Tolkien, ISBN: 88-18-12369-6)
+
+*** Aggiunta utenti ***
+Utenti ordinati per codice:
+1- Mario Rossi
+2- Giuseppe Verdi
+3- Pietro Bianchi
+4- Giovanni Rossi
+5- Antonio Verdi
+
+*** Operazioni di prestito e restituzione ***
+Prestato a Mario: Libro: Compilers (Autore: Aho,Ullman, ISBN: 0-321-48681-1)
+Prestato a Mario: Libro: Java How to Program (Autore: Deitel,Deitel, ISBN: 0-273-75976-0)
+Prestato a Mario: Libro: Poesie (Autore: Neruda, ISBN: 88-06-02550-3)
+Prestato a Pietro: null
+Prestato a Giuseppe: null
+Restituito da Mario: Libro: Compilers (Autore: Aho,Ullman, ISBN: 0-321-48681-1)
+Prestato a Antonio: null
+Prestato a Antonio: Libro: Il Signore degli Anelli (Autore: Tolkien, ISBN: 88-18-12369-6)
+Prestato a Giovanni: null
+Restituito da Mario: Libro: Poesie (Autore: Neruda, ISBN: 88-06-02550-3)
+Prestato a Antonio: null
+Prestato a Giuseppe: null
+
+*** Elenco prestiti utente 1- Mario Rossi ***
+  Libro: Java How to Program (Autore: Deitel,Deitel, ISBN: 0-273-75976-0)
+
+*** Elenco richieste per il libro Compilers ***
+  2- Giuseppe Verdi
+  4- Giovanni Rossi
+
+*** Elenco prestiti totali ***
+ Libro: Compilers (Autore: Aho,Ullman, ISBN: 0-321-48681-1)
+ Libro: Java How to Program (Autore: Deitel,Deitel, ISBN: 0-273-75976-0)
+ Libro: Poesie (Autore: Neruda, ISBN: 88-06-02550-3)
+ Libro: Il Signore degli Anelli (Autore: Tolkien, ISBN: 88-18-12369-6)
+
+*** Elenco richieste totali ***
+  Libro: Compilers (Autore: Aho,Ullman, ISBN: 0-321-48681-1)
+  Libro: Java How to Program (Autore: Deitel,Deitel, ISBN: 0-273-75976-0)

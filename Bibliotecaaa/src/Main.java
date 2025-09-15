@@ -5,109 +5,122 @@ import Library.Libro;
 import Library.Utente;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Biblioteca b1 = new Biblioteca("Centrale");
+        // Specifichiamo il nome del file di log
+        String fileLog = "log_operazioni.txt";
 
-        String nomeFile = "libri.txt";
+        // Usiamo PrintWriter per scrivere su un file, con try-with-resources
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileLog)))) {
+            Biblioteca b1 = new Biblioteca("Centrale");
+            String nomeFile = "libri.txt";
 
-        // Chiamiamo il metodo per caricare i libri dal file
-        List<Libro> listaLibri = caricaLibriDaFile(nomeFile);
+            // Chiamiamo il metodo per caricare i libri dal file
+            List<Libro> listaLibri = caricaLibriDaFile(nomeFile);
 
-        if (!listaLibri.isEmpty()) {
-            System.out.println("Libri caricati dal file:");
-            try {
-                for (Libro l : listaLibri) {
-                    b1.addLibro(l);
-                    System.out.println("Aggiunto: " + l.getAutori() + ", Titolo: " + l.getTitolo());
+            if (!listaLibri.isEmpty()) {
+                writer.println("Libri caricati dal file:");
+                try {
+                    for (Libro l : listaLibri) {
+                        b1.addLibro(l);
+                        writer.println("Aggiunto: " + l.getAutori() + ", Titolo: " + l.getTitolo());
+                    }
+                } catch (InvalidIsbn i) {
+                    i.printStackTrace(writer); // Stampa l'errore nel file
                 }
-            } catch (InvalidIsbn i) {
-                i.printStackTrace();
+            } else {
+                writer.println("Nessun libro caricato. Controlla il file o il suo percorso.");
             }
-        } else {
-            System.out.println("Nessun libro caricato. Controlla il file o il suo percorso.");
-        }
 
-        Libro l1 = b1.getLibro("0-273-75976-0");
-        Libro l2 = b1.getLibro("0-321-48681-1");
-        Libro l3 = b1.getLibro("88-18-12369-6");
-        Libro l4 = b1.getLibro("88-06-02550-3");
+            Libro l1 = b1.getLibro("0-273-75976-0");
+            Libro l2 = b1.getLibro("0-321-48681-1");
+            Libro l3 = b1.getLibro("88-18-12369-6");
+            Libro l4 = b1.getLibro("88-06-02550-3");
 
-        System.out.println("\n*** Informazioni sui libri caricati ***");
-        System.out.println("l1 = " + l1);
-        System.out.println("l2 = " + l2);
-        System.out.println("l3 = " + l3);
-        System.out.println("l4 = " + l4);
+            writer.println("\n*** Informazioni sui libri caricati ***");
+            writer.println("l1 = " + l1);
+            writer.println("l2 = " + l2);
+            writer.println("l3 = " + l3);
+            writer.println("l4 = " + l4);
 
-        System.out.println("\n*** Libri ordinati per autore ***");
-        for(Libro lib : b1.libriPerAutore()) {
-            System.out.println(lib);
-        }
+            writer.println("\n*** Libri ordinati per autore ***");
+            for (Libro lib : b1.libriPerAutore()) {
+                writer.println(lib);
+            }
 
-        Utente u1 = new Utente(1, "Mario", "Rossi");
-        Utente u2 = new Utente(2, "Giuseppe", "Verdi");
-        Utente u3 = new Utente(3, "Pietro", "Bianchi");
-        Utente u4 = new Utente(4, "Giovanni", "Rossi");
-        Utente u5 = new Utente(5, "Antonio", "Verdi");
+            Utente u1 = new Utente(1, "Mario", "Rossi");
+            Utente u2 = new Utente(2, "Giuseppe", "Verdi");
+            Utente u3 = new Utente(3, "Pietro", "Bianchi");
+            Utente u4 = new Utente(4, "Giovanni", "Rossi");
+            Utente u5 = new Utente(5, "Antonio", "Verdi");
 
-        System.out.println("\n*** Aggiunta utenti ***");
-        try {
-            b1.addUtente(u2);
-            b1.addUtente(u1);
-            b1.addUtente(u3);
-            b1.addUtente(u5);
-            b1.addUtente(u4);
-        } catch (InvalidCode c) {
-            c.printStackTrace();
-        }
-        System.out.println("Utenti ordinati per codice:");
-        for(Utente u : b1.utenti()) {
-            System.out.println(u);
-        }
+            writer.println("\n*** Aggiunta utenti ***");
+            try {
+                b1.addUtente(u2);
+                b1.addUtente(u1);
+                b1.addUtente(u3);
+                b1.addUtente(u5);
+                b1.addUtente(u4);
+            } catch (InvalidCode c) {
+                c.printStackTrace(writer); // Stampa l'errore nel file
+            }
+            writer.println("Utenti ordinati per codice:");
+            for (Utente u : b1.utenti()) {
+                writer.println(u);
+            }
 
-        System.out.println("\n*** Operazioni di prestito e restituzione ***");
-        try {
-            System.out.println("Prestato a " + u1.getNome() + ": " + b1.prestito(1,"0-321-48681-1"));
-            System.out.println("Prestato a " + u1.getNome() + ": " + b1.prestito(1,"0-273-75976-0"));
-            System.out.println("Prestato a " + u1.getNome() + ": " + b1.prestito(1,"88-06-02550-3"));
-            System.out.println("Prestato a " + u3.getNome() + ": " + b1.prestito(3,"0-321-48681-1"));
-            System.out.println("Prestato a " + u2.getNome() + ": " + b1.prestito(2,"0-321-48681-1"));
-            System.out.println("Restituito da " + u1.getNome() + ": " + b1.restituzione(1,"0-321-48681-1"));
-            System.out.println("Prestato a " + u5.getNome() + ": " + b1.prestito(5,"88-06-02550-3"));
-            System.out.println("Prestato a " + u5.getNome() + ": " + b1.prestito(5,"88-18-12369-6"));
-            System.out.println("Prestato a " + u4.getNome() + ": " + b1.prestito(4,"0-321-48681-1"));
-            System.out.println("Restituito da " + u1.getNome() + ": " + b1.restituzione(1,"88-06-02550-3"));
-            System.out.println("Prestato a " + u5.getNome() + ": " + b1.prestito(5,"88-18-12369-6"));
-            System.out.println("Prestato a " + u2.getNome() + ": " + b1.prestito(2,"0-273-75976-0"));
-        } catch (InvalidCode c) {
-            c.printStackTrace();
-        } catch (InvalidIsbn i) {
-            i.printStackTrace();
-        }
+            writer.println("\n*** Operazioni di prestito e restituzione ***");
+            try {
+                writer.println("Prestato a " + u1.getNome() + ": " + b1.prestito(1, "0-321-48681-1"));
+                writer.println("Prestato a " + u1.getNome() + ": " + b1.prestito(1, "0-273-75976-0"));
+                writer.println("Prestato a " + u1.getNome() + ": " + b1.prestito(1, "88-06-02550-3"));
+                writer.println("Prestato a " + u3.getNome() + ": " + b1.prestito(3, "0-321-48681-1"));
+                writer.println("Prestato a " + u2.getNome() + ": " + b1.prestito(2, "0-321-48681-1"));
+                writer.println("Restituito da " + u1.getNome() + ": " + b1.restituzione(1, "0-321-48681-1"));
+                writer.println("Prestato a " + u5.getNome() + ": " + b1.prestito(5, "88-06-02550-3"));
+                writer.println("Prestato a " + u5.getNome() + ": " + b1.prestito(5, "88-18-12369-6"));
+                writer.println("Prestato a " + u4.getNome() + ": " + b1.prestito(4, "0-321-48681-1"));
+                writer.println("Restituito da " + u1.getNome() + ": " + b1.restituzione(1, "88-06-02550-3"));
+                writer.println("Prestato a " + u5.getNome() + ": " + b1.prestito(5, "88-18-12369-6"));
+                writer.println("Prestato a " + u2.getNome() + ": " + b1.prestito(2, "0-273-75976-0"));
+            } catch (InvalidCode c) {
+                c.printStackTrace(writer);
+            } catch (InvalidIsbn i) {
+                i.printStackTrace(writer);
+            }
 
-        System.out.println("\n*** Elenco prestiti utente " + u1 + " ***");
-        for(Libro lib : u1.prestiti()) {
-            System.out.println("  " + lib);
-        }
+            writer.println("\n*** Elenco prestiti utente " + u1 + " ***");
+            for (Libro lib : u1.prestiti()) {
+                writer.println("  " + lib);
+            }
 
-        System.out.println("\n*** Elenco richieste per il libro " + l2.getTitolo() + " ***");
-        for(Utente u : b1.getRichieste(l2)) {
-            System.out.println("  " + u);
-        }
+            writer.println("\n*** Elenco richieste per il libro " + l2.getTitolo() + " ***");
+            for (Utente u : b1.getRichieste(l2)) {
+                writer.println("  " + u);
+            }
 
-        System.out.println("\n*** Elenco prestiti totali ***");
-        for(Libro lib : b1.elencoPrestiti()) {
-            System.out.println(" " + lib);
-        }
+            writer.println("\n*** Elenco prestiti totali ***");
+            for (Libro lib : b1.elencoPrestiti()) {
+                writer.println(" " + lib);
+            }
 
-        System.out.println("\n*** Elenco richieste totali ***");
-        for(Libro lib : b1.elencoRichieste()){
-            System.out.println("  " + lib);
+            writer.println("\n*** Elenco richieste totali ***");
+            for (Libro lib : b1.elencoRichieste()) {
+                writer.println("  " + lib);
+            }
+
+            System.out.println("Output salvato con successo nel file: " + fileLog);
+
+        } catch (IOException e) {
+            System.err.println("Errore durante la scrittura del file di log: " + e.getMessage());
         }
     }
 
